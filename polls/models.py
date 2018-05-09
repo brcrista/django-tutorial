@@ -8,7 +8,8 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
 
     def is_new(self) -> bool:
-        return self.pub_date >= timezone.now() - datetime.timedelta(1)
+        now = timezone.now()
+        return now - datetime.timedelta(1) <= self.pub_date <= now
 
     def __str__(self) -> str:
         return self.question_text
