@@ -14,7 +14,8 @@ def detail(request: HttpRequest, question_id: int) -> HttpResponse:
     return render(request, 'polls/detail.html', { 'question': question })
 
 def results(request: HttpRequest, question_id: int) -> HttpResponse:
-    return HttpResponse("You're looking at the results of question %s" % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', { 'question': question })
 
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     question = get_object_or_404(Question, pk=question_id)
@@ -27,6 +28,7 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
             'error_message': "You didn't select a choice."
         })
     else:
+        # TODO race condition: make atomic
         choice.votes += 1
         choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
