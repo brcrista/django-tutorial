@@ -1,12 +1,16 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils import timezone
 
 from .models import Choice, Question
 
+def non_future_questions():
+    return Question.objects.filter(pub_date__lte=timezone.now())
+
 def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'polls/index.html', {
-        'latest_questions': Question.objects.order_by('-pub_date')[:5]
+        'latest_questions': non_future_questions().order_by('-pub_date')[:5]
     })
 
 def detail(request: HttpRequest, question_id: int) -> HttpResponse:
