@@ -27,7 +27,7 @@ def create_question(question_text: str, time_from_now: datetime.timedelta) -> No
 
 def question_str(question_text: str) -> str:
     """Simulate the string representation of a question."""
-    return f'<Question: {question_text}>'
+    return '<Question: {}>'.format(question_text)
 
 class IndexViewTests(TestCase):
     def test_no_questions(self):
