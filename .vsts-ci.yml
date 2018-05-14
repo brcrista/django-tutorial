@@ -56,3 +56,4 @@ phases:
     inputs:
       pathToPublish: '$(build.artifactStagingDirectory)'
       artifactName: 'artifact'
+      publishLocation: 'container'
