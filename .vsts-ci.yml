@@ -25,10 +25,10 @@ phases:
   - script: python -m pip install --upgrade pip setuptools wheel
     displayName: 'Install dependencies'
 
-  - script: python -m pip install -r requirements.txt
+  - script: pip install -r requirements.txt
     displayName: 'Install requirements'
 
-  - script: python -m pip install unittest-xml-reporting
+  - script: pip install unittest-xml-reporting
     displayName: 'Install unittest-xml-reporting'
 
   - script: python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
@@ -49,8 +49,10 @@ phases:
   queue: 'Hosted Linux Preview'
   steps:
   - task: CopyFiles@2
-    displayName: 'Stage project directory'
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)/$(projectRoot)'
       targetFolder: '$(build.artifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(build.artifactStagingDirectory)'
+      artifactName: 'artifact'
