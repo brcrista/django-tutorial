@@ -41,17 +41,16 @@ phases:
       testRunTitle: 'Python $(PYTHON_VERSION)'
 
 # Phase 3: Copy sources to prepare for publishing
-#- phase: 'PublishProjectArtifact'
-#  dependsOn:
-#    - 'LocateProject'
-#    - 'Test'
-#  variables:
-#    projectRoot: $[ dependencies.LocateProject.outputs['setvar.projectDir'] ]
-#  queue: 'Hosted Linux Preview'
-#  steps:
-#  - task: CopyFiles@2
-#    displayName: 'Stage project directory'
-#    inputs:
-#      sourceFolder: '$(Build.SourcesDirectory)/$(projectRoot)'
-#      targetFolder: '$(build.artifactStagingDirectory)'
-#  - task: PublishBuildArtifacts@1
+- phase: 'PublishProjectArtifact'
+  dependsOn:
+    - 'Test'
+  variables:
+    projectRoot: '.'
+  queue: 'Hosted Linux Preview'
+  steps:
+  - task: CopyFiles@2
+    displayName: 'Stage project directory'
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)/$(projectRoot)'
+      targetFolder: '$(build.artifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
