@@ -37,7 +37,6 @@ phases:
   - task: PublishTestResults@2
     inputs:
       testResultsFiles: "**/TEST-*.xml"
-      # searchFolder: $(system.defaultWorkingDirectory)/$(projectRoot)
       testRunTitle: 'Python $(PYTHON_VERSION)'
 
 # Phase 3: Copy sources to prepare for publishing
